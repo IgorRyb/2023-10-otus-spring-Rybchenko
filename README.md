@@ -1,2 +1,5 @@
 # HomeWorkSpring
-Homework for Otus by Spring
+Рыбченко И.С. 
+Курс: Разработчик на Spring Framework
+Группа: 2023-09
+
