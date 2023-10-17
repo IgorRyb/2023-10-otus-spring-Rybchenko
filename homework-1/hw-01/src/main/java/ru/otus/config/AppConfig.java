@@ -1,0 +1,19 @@
+package ru.otus.config;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@AllArgsConstructor
+@Data
+public class AppConfig implements TestFileNameProvider {
+
+    private String testFileName;
+
+    public AppConfig() {
+    }
+
+    @Override
+    public String getTestFileName() {
+        return testFileName;
+    }
+}
