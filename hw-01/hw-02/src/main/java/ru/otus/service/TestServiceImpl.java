@@ -27,7 +27,7 @@ public class TestServiceImpl implements TestService {
         return testResult;
     }
 
-    public TestResult askAllQuestions(Student student, List<Question> questions) {
+    private TestResult askAllQuestions(Student student, List<Question> questions) {
         var testResult = new TestResult(student);
         for (int i = 0; i < questions.size(); i++) {
             printQuestionAndAnswer(i);
@@ -40,12 +40,12 @@ public class TestServiceImpl implements TestService {
         return testResult;
     }
 
-    public void printQuestionAndAnswer(int i) {
+    private void printQuestionAndAnswer(int i) {
         ioService.printLine(questionDao.findAll().get(i).text());
         questionDao.findAll().get(i).answers().forEach(answer -> ioService.printLine(answer.text()));
     }
 
-    public String getTrueAnswer(List<Answer> answers) {
+    private String getTrueAnswer(List<Answer> answers) {
         String trueAnswer = null;
         for (Answer answer : answers) {
             if (answer.isCorrect()) {
@@ -55,7 +55,7 @@ public class TestServiceImpl implements TestService {
         return trueAnswer;
     }
 
-    public boolean comparingEnteredAndCorrectAnswers(List<Answer> answers, String studentResponse, String trueAnswer) {
+    private boolean comparingEnteredAndCorrectAnswers(List<Answer> answers, String studentResponse, String trueAnswer) {
         boolean isAnswerValid = false;
         for (int i = 0; i < answers.size(); i++) {
             if (studentResponse.equals(trueAnswer)) {

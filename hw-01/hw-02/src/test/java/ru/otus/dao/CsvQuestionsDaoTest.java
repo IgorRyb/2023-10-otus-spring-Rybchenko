@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -15,18 +16,14 @@ public class CsvQuestionsDaoTest {
     @Mock
     private TestFileNameProvider testFileNameProvider;
 
-    private QuestionDao questionDao;
-
-    @BeforeEach
-    void initEach() {
-        questionDao = new CsvQuestionDao(testFileNameProvider);
-    }
+    @InjectMocks
+    private CsvQuestionDao csvQuestionDao;
 
     @Test
     void checkSizeQuestionsArray() {
         int expectedArraySize = 5;
         Mockito.when(testFileNameProvider.getTestFileName()).thenReturn("questions.csv");
-        int actualArraySize = questionDao.findAll().size();
+        int actualArraySize = csvQuestionDao.findAll().size();
         Assertions.assertEquals(expectedArraySize, actualArraySize);
     }
 }
