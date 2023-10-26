@@ -58,9 +58,7 @@ public class TestServiceImpl implements TestService {
     private boolean comparingEnteredAndCorrectAnswers(List<Answer> answers, String studentResponse, String trueAnswer) {
         boolean isAnswerValid = false;
         for (int i = 0; i < answers.size(); i++) {
-            if (studentResponse.equals(trueAnswer)) {
-                isAnswerValid = true;
-            }
+            if (studentResponse.equals(trueAnswer)) isAnswerValid = true;
         }
         return isAnswerValid;
     }
