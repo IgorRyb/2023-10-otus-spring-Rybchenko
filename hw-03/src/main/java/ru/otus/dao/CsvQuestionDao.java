@@ -11,6 +11,7 @@ import ru.otus.exceptions.QuestionReadException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class CsvQuestionDao implements QuestionDao {
     public List<Question> findAll() {
         List<Question> allQuestions = new ArrayList<>();
         try (InputStream is = getClass().getClassLoader().getResourceAsStream(fileNameProvider.getTestFileName());
-             InputStreamReader streamReader = new InputStreamReader(is)) {
+             InputStreamReader streamReader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
             List<QuestionDto> questionDtos = new CsvToBeanBuilder<QuestionDto>(streamReader)
                     .withSkipLines(1)
                     .withSeparator(';')
@@ -38,5 +39,4 @@ public class CsvQuestionDao implements QuestionDao {
         }
         return allQuestions;
     }
-
 }

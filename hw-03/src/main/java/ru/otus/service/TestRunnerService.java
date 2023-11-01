@@ -1,7 +1,6 @@
 package ru.otus.service;
 
-import java.io.FileNotFoundException;
+import org.springframework.boot.CommandLineRunner;
 
-public interface TestRunnerService {
-    void run() throws FileNotFoundException;
+public interface TestRunnerService extends CommandLineRunner {
 }

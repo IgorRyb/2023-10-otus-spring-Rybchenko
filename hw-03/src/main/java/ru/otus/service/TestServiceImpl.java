@@ -14,14 +14,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TestServiceImpl implements TestService {
 
-    private final IOService ioService;
+    private final LocalizedIOService ioService;
 
     private final QuestionDao questionDao;
 
     @Override
     public TestResult executeTestFor(Student student) {
         ioService.printLine("");
-        ioService.printFormattedLine("TestService.answer.the.questions");
+        ioService.printFormattedLineLocalized("TestService.answer.the.questions");
         var questions = questionDao.findAll();
         var testResult = askAllQuestions(student, questions);
         return testResult;
@@ -58,7 +58,9 @@ public class TestServiceImpl implements TestService {
     private boolean comparingEnteredAndCorrectAnswers(List<Answer> answers, String studentResponse, String trueAnswer) {
         boolean isAnswerValid = false;
         for (int i = 0; i < answers.size(); i++) {
-            if (studentResponse.equals(trueAnswer)) isAnswerValid = true;
+            if (studentResponse.equals(trueAnswer)) {
+                isAnswerValid = true;
+            }
         }
         return isAnswerValid;
     }

@@ -8,12 +8,12 @@ import ru.otus.domain.Student;
 @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
 
-    private final IOService ioService;
+    private final LocalizedIOService ioService;
 
     @Override
     public Student determineCurrentStudent() {
-        var firstName = ioService.readStringWithPrompt("StudentService.input.first.name");
-        var lastName = ioService.readStringWithPrompt("StudentService.input.last.name");
+        var firstName = ioService.readStringWithPromptLocalized("StudentService.input.first.name");
+        var lastName = ioService.readStringWithPromptLocalized("StudentService.input.last.name");
         return new Student(firstName, lastName);
     }
 }

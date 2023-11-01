@@ -25,9 +25,9 @@ public class ResultServiceImpl implements ResultService {
                 testResult.getRightAnswersCount());
 
         if (testResult.getRightAnswersCount() >= testConfig.getRightAnswersCountToPass()) {
-            ioService.printLine("ResultService.passed.test");
+            ioService.printFormattedLineLocalized("ResultService.passed.test");
             return;
         }
-        ioService.printLine("ResultService.fail.test");
+        ioService.printFormattedLineLocalized("ResultService.fail.test");
     }
 }
