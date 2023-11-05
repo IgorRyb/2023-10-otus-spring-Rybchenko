@@ -1,6 +1,10 @@
 package ru.otus.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.shell.Availability;
+import org.springframework.shell.standard.ShellComponent;
+import org.springframework.shell.standard.ShellMethod;
+import org.springframework.shell.standard.ShellMethodAvailability;
 import org.springframework.stereotype.Service;
 import ru.otus.domain.Student;
 

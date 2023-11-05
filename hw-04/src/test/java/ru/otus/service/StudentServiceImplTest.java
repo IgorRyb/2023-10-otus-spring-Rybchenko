@@ -2,20 +2,26 @@ package ru.otus.service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.mockito.ArgumentMatchers.anyString;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 public class StudentServiceImplTest {
 
-    @Mock
+    @MockBean
     private LocalizedIOService ioService;
 
+    @Autowired
     private StudentService studentService;
 
     @BeforeEach
@@ -23,6 +29,7 @@ public class StudentServiceImplTest {
         studentService = new StudentServiceImpl(ioService);
     }
 
+    @DisplayName("Должен возвращать корректное отображение введенного имени")
     @Test
     void checkFirstNameInput() {
         String expectedName = "Igor";
