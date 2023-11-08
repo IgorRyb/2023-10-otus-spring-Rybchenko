@@ -6,7 +6,7 @@ spring:
 
 test:
   countAnsweredQuestionsForPass: 3
-  locale: en-US
+  locale: ru_RU
   fileNameByLocaleTag:
     en-US: questions.csv
     ru-RU: questions_ru.csv
