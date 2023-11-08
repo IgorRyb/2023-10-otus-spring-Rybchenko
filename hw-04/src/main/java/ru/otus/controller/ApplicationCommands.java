@@ -16,7 +16,7 @@ public class ApplicationCommands {
 
     private final LocalizedIOService ioService;
 
-    private String age;
+    private int age;
 
     @ShellMethod(value = "Test run command", key = {"r", "run"})
     @ShellMethodAvailability("isCheckAgeAvailable")
@@ -25,13 +25,13 @@ public class ApplicationCommands {
     }
 
     @ShellMethod(value = "Check age command", key = {"a", "age"})
-    public void checkAge(String age) {
+    public void checkAge(int age) {
         this.age = age;
         ioService.printFormattedLineLocalized("ApplicationCommands.output.age", age);
     }
 
     public Availability isCheckAgeAvailable() {
-        return age == null ? Availability.unavailable(ioService.getMessage("ApplicationCommands.fail.input.text"))
+        return age == 0 ? Availability.unavailable(ioService.getMessage("ApplicationCommands.fail.input.text"))
                 : Availability.available();
     }
 }
