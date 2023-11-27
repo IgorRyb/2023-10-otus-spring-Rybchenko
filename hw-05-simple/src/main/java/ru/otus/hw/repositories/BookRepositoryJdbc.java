@@ -63,9 +63,7 @@ public class BookRepositoryJdbc implements BookRepository {
 
     @Override
     public void deleteById(long id) {
-        findById(id).ifPresent(book ->
-                jdbc.execute("delete from books where id = :id", Map.of("id", id),
-                (PreparedStatementCallback<Object>) ps -> ps.executeUpdate()));
+        jdbc.update("delete from books where id = :id", Map.of("id", id));
     }
 
     private Book insert(Book book) {
@@ -93,7 +91,7 @@ public class BookRepositoryJdbc implements BookRepository {
 
         @Override
         public Book mapRow(ResultSet rs, int rowNum) throws SQLException {
-            Long id = rs.getLong("id");
+            long id = rs.getLong("id");
             String title = rs.getString("title");
             return new Book(id, title,
                     new Author(rs.getLong("a_id"), rs.getString("full_name")),
