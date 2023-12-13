@@ -35,7 +35,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Transactional
     @Override
-    public void updateCommentById(long id, String text) {
-        commentRepository.updateCommentById(id, text);
+    public void save(Comment comment) {
+        commentRepository.save(comment);
     }
 }

@@ -18,7 +18,7 @@ public class GenreRepositoryJpa implements GenreRepository {
 
     @Override
     public List<Genre> findAll() {
-        return em.createQuery("select g from Genre g").getResultList();
+        return em.createQuery("select g from Genre g", Genre.class).getResultList();
     }
 
     @Override

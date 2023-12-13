@@ -13,5 +13,5 @@ public interface CommentRepository {
 
     void deleteById(long id);
 
-    void updateCommentById(long id, String text);
+    Comment save(Comment comment);
 }

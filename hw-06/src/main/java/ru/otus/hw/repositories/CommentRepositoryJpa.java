@@ -27,7 +27,7 @@ public class CommentRepositoryJpa implements  CommentRepository {
     @Override
     public List<Comment> findCommentsByBookId(long bookId) {
         TypedQuery<Comment> query = em.createQuery("select c from Comment c " +
-                "where c.book_id = :id", Comment.class);
+                "where c.book.id = :id", Comment.class);
         query.setParameter("id", bookId);
         return query.getResultList();
     }
@@ -41,12 +41,12 @@ public class CommentRepositoryJpa implements  CommentRepository {
     }
 
     @Override
-    public void updateCommentById(long id, String text) {
-        Query query = em.createQuery("update Comment c set c.comment = :text " +
-                "where c.id = :id");
-        query.setParameter("text", text);
-        query.setParameter("id", id);
-        query.executeUpdate();
+    public Comment save(Comment comment) {
+        if (comment.getId() == 0) {
+            em.persist(comment);
+            return comment;
+        }
+        return em.merge(comment);
     }
 
 }
