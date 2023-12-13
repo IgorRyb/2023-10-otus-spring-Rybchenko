@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
+import ru.otus.hw.models.Book;
 import ru.otus.hw.models.Comment;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,9 +44,11 @@ public class CommentRepositoryTestJpa {
     }
 
     @Test
-    @DisplayName(" Должен изменить текст комментария")
+    @DisplayName(" Должен обновить комментарий")
     void shouldUpdateComment() {
-        commentRepository.updateCommentById(1l, "new Text");
+        Book book = new Book(1, "title", null, null);
+        Comment expectedComment = new Comment(1, "new Text", book);
+        commentRepository.save(expectedComment);
         var actualComment = commentRepository.findById(1L);
         assertThat(actualComment).isPresent().get().hasFieldOrPropertyWithValue("comment", "new Text");
     }
