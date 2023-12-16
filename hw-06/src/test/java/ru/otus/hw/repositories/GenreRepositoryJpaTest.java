@@ -42,10 +42,15 @@ public class GenreRepositoryJpaTest {
     @DisplayName(" Должен обновить жанр")
     void shouldSaveGenre() {
         var firstGenre = new Genre(1L, "new Name to Genre");
-        genreRepository.save(firstGenre);
-        var expectedGenre = genreRepository.findById(1L);
-        assertThat(expectedGenre).isPresent()
-                .get().hasFieldOrPropertyWithValue("name", "new Name to Genre");
+        assertThat(genreRepository.findById(firstGenre.getId()))
+                .isPresent()
+                .get()
+                .isNotEqualTo(firstGenre);
+
+        var actualGenre = genreRepository.save(firstGenre);
+        assertThat(genreRepository.findById(actualGenre.getId())).isPresent()
+                .get()
+                .isEqualTo(actualGenre);
     }
 
     @Test
@@ -54,7 +59,7 @@ public class GenreRepositoryJpaTest {
         var response = genreRepository.findById(1L);
         assertThat(response).isNotNull();
         genreRepository.deleteById(1L);
-        var deleteGenre = genreRepository.findById(1L);
-        assertThat(deleteGenre).isEmpty();
+        var deleteGenre = em.find(Genre.class, 1L);
+        assertThat(deleteGenre).isNull();
     }
 }

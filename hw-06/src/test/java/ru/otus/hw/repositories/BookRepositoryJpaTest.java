@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
+import ru.otus.hw.models.Author;
 import ru.otus.hw.models.Book;
+import ru.otus.hw.models.Genre;
 
 import java.util.List;
 
@@ -47,12 +49,17 @@ public class BookRepositoryJpaTest {
     @DisplayName(" Должен сохранить измененную книгу")
     @Test
     void shouldSaveBook() {
-        var book = em.find(Book.class, 1l);
-        assertThat(book).isNotNull();
-        book.setTitle("test title");
+        var expectedBook = new Book(1L, "title", new Author(), new Genre());
+        assertThat(bookRepository.findById(expectedBook.getId()))
+                .isPresent()
+                .get()
+                .isNotEqualTo(expectedBook);
 
-        bookRepository.save(book);
-        assertThat(book.getTitle()).isEqualTo("test title");
+        var savedBook = bookRepository.save(expectedBook);
+        assertThat(bookRepository.findById(savedBook.getId()))
+                .isPresent()
+                .get()
+                .isEqualTo(savedBook);
     }
 
     @DisplayName( "Должен удалить книгу по id")
@@ -62,7 +69,7 @@ public class BookRepositoryJpaTest {
         assertThat(book).isNotEmpty();
 
         bookRepository.deleteById(1L);
-        var actualBook = bookRepository.findById(1L);
-        assertThat(actualBook).isEmpty();
+        var actualBook = em.find(Book.class, 1L);
+        assertThat(actualBook).isNull();
     }
 }
