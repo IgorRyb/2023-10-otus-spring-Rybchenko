@@ -27,6 +27,6 @@ public class AuthorCommands {
     public String findById(long id) {
         return authorService.findById(id)
                 .map(authorConverter::authorToString)
-                .toString();
+                .orElse("author with id %d not found".formatted(id));
     }
 }
