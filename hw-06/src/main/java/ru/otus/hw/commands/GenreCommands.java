@@ -27,6 +27,6 @@ public class GenreCommands {
     public String findGenreById(long id) {
         return genreService.findById(id)
                 .map(genreConverter::genreToString)
-                .toString();
+                .orElse("genre with id %d not found".formatted(id));
     }
 }
