@@ -26,9 +26,11 @@ public class CommentRepositoryTestJpa {
     void shouldCommentById() {
         var expectedComment = em.find(Comment.class, 1L);
         assertThat(expectedComment).isNotNull();
-        var actualComment = commentRepository.findById(1L);
-        assertThat(actualComment).isPresent().get()
-                .isNotNull().usingRecursiveComparison().isEqualTo(expectedComment);
+        var actualComment = em.find(Comment.class, 1L);
+        assertThat(actualComment)
+                .isNotNull()
+                .usingRecursiveComparison()
+                .isEqualTo(expectedComment);
     }
 
     @Test
@@ -49,7 +51,7 @@ public class CommentRepositoryTestJpa {
         Book book = new Book(1, "title", null, null);
         Comment expectedComment = new Comment(1, "new Text", book);
         commentRepository.save(expectedComment);
-        var actualComment = commentRepository.findById(1L);
-        assertThat(actualComment).isPresent().get().hasFieldOrPropertyWithValue("comment", "new Text");
+        var actualComment = em.find(Comment.class, 1L);
+        assertThat(actualComment).hasFieldOrPropertyWithValue("comment", "new Text");
     }
 }

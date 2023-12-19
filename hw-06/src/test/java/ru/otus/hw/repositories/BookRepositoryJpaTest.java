@@ -50,23 +50,18 @@ public class BookRepositoryJpaTest {
     @Test
     void shouldSaveBook() {
         var expectedBook = new Book(1L, "title", new Author(), new Genre());
-        assertThat(bookRepository.findById(expectedBook.getId()))
-                .isPresent()
-                .get()
+        assertThat(em.find(Book.class, 1L))
                 .isNotEqualTo(expectedBook);
 
         var savedBook = bookRepository.save(expectedBook);
-        assertThat(bookRepository.findById(savedBook.getId()))
-                .isPresent()
-                .get()
+        assertThat(em.find(Book.class, 1L))
                 .isEqualTo(savedBook);
     }
 
     @DisplayName( "Должен удалить книгу по id")
     @Test
     void shouldDeleteBookById() {
-        var book = bookRepository.findById(1L);
-        assertThat(book).isNotEmpty();
+        assertThat(em.find(Book.class, 1L)).isNotNull();
 
         bookRepository.deleteById(1L);
         var actualBook = em.find(Book.class, 1L);

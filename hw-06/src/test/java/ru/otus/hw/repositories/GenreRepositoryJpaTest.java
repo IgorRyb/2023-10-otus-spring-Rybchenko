@@ -34,30 +34,26 @@ public class GenreRepositoryJpaTest {
     @DisplayName(" Должен вернуть жанр по id")
     void shouldFindGenreById() {
         Optional<Genre> genre = genreRepository.findById(1L);
-        assertThat(genre).isNotEmpty()
-                .get().hasFieldOrPropertyWithValue("name", "Genre_1");
+        assertThat(em.find(Genre.class, 1L)).isNotNull()
+                .hasFieldOrPropertyWithValue("name", "Genre_1");
     }
 
     @Test
     @DisplayName(" Должен обновить жанр")
     void shouldSaveGenre() {
         var firstGenre = new Genre(1L, "new Name to Genre");
-        assertThat(genreRepository.findById(firstGenre.getId()))
-                .isPresent()
-                .get()
+        assertThat(em.find(Genre.class, firstGenre.getId()))
                 .isNotEqualTo(firstGenre);
 
         var actualGenre = genreRepository.save(firstGenre);
-        assertThat(genreRepository.findById(actualGenre.getId())).isPresent()
-                .get()
+        assertThat(em.find(Genre.class, actualGenre.getId()))
                 .isEqualTo(actualGenre);
     }
 
     @Test
     @DisplayName(" Должен удалить жанр по id")
     void shouldDeleteGenre() {
-        var response = genreRepository.findById(1L);
-        assertThat(response).isNotNull();
+        assertThat(em.find(Genre.class, 1L)).isNotNull();
         genreRepository.deleteById(1L);
         var deleteGenre = em.find(Genre.class, 1L);
         assertThat(deleteGenre).isNull();
