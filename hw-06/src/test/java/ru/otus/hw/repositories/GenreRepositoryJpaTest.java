@@ -33,9 +33,10 @@ public class GenreRepositoryJpaTest {
     @Test
     @DisplayName(" Должен вернуть жанр по id")
     void shouldFindGenreById() {
-        Optional<Genre> genre = genreRepository.findById(1L);
-        assertThat(em.find(Genre.class, 1L)).isNotNull()
-                .hasFieldOrPropertyWithValue("name", "Genre_1");
+        var actualGenre = genreRepository.findById(1L);
+        var expectedGenre = em.find(Genre.class, 1L);
+        assertThat(actualGenre).isPresent().get()
+                .usingRecursiveComparison().isEqualTo(expectedGenre);
     }
 
     @Test
