@@ -5,4 +5,6 @@ import ru.otus.hw.models.Comment;
 
 
 public interface CommentRepository extends MongoRepository<Comment, String> {
+
+    Comment findByBookId(String id);
 }

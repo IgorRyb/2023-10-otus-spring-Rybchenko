@@ -4,9 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.context.annotation.Import;
+import org.springframework.data.mongodb.core.MongoOperations;
 import ru.otus.hw.models.Genre;
 
 import java.util.List;
@@ -14,10 +12,13 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataMongoTest
-public class GenreRepositoryJpaTest {
+public class GenreRepositoryMongoTest {
 
     @Autowired
     private GenreRepository genreRepository;
+
+    @Autowired
+    private MongoOperations mongoOperations;
 
     @Test
     @DisplayName(" Должен вывести все жанры")
@@ -29,11 +30,11 @@ public class GenreRepositoryJpaTest {
     @Test
     @DisplayName(" Должен обновить жанр")
     void shouldSaveGenre() {
-        Genre genre = genreRepository.findAll().get(0);
+        Genre genre = mongoOperations.findAll(Genre.class).get(0);
         assertThat(genre).isNotNull();
         genre.setName("story");
         genreRepository.save(genre);
-        assertThat(genreRepository.findAll().get(0))
+        assertThat(mongoOperations.findAll(Genre.class).get(0))
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("name","story");
     }
@@ -41,9 +42,9 @@ public class GenreRepositoryJpaTest {
     @Test
     @DisplayName(" Должен удалить жанр по id")
     void shouldDeleteGenre() {
-        Genre genre = genreRepository.findAll().get(0);
+        Genre genre = mongoOperations.findAll(Genre.class).get(0);
         assertThat(genre).isNotNull();
         genreRepository.deleteById(genre.getId());
-        assertThat(genreRepository.findById(genre.getId())).isEmpty();
+        assertThat(mongoOperations.findById(genre.getId(), Genre.class)).isNull();
     }
 }

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.data.mongodb.core.MongoOperations;
 import ru.otus.hw.models.Author;
 import ru.otus.hw.models.Book;
 import ru.otus.hw.models.Genre;
@@ -27,6 +28,9 @@ public class BookRepositoryMongoTest {
 
     @Autowired
     private CommentRepository commentRepository;
+
+    @Autowired
+    private MongoOperations mongoOperations;
 
     private List<Author> authorsDb;
 
@@ -67,7 +71,7 @@ public class BookRepositoryMongoTest {
         var expectedBook = bookDb.get(0);
         assertThat(expectedBook).isNotNull();
         bookRepository.deleteById(expectedBook.getId());
-        assertThat(bookRepository.findById(expectedBook.getId())).isEmpty();
+        assertThat(mongoOperations.findById(expectedBook.getId(), Book.class)).isNull();
     }
 
     private List<Author> getAuthorsDb() {

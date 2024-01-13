@@ -9,18 +9,20 @@ import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 
 
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.mongodb.core.MongoOperations;
 import ru.otus.hw.models.Author;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataMongoTest
-@ComponentScan("ru.otus.hw.repositories")
-@EnableConfigurationProperties
-public class AuthorRepositoryJpaTest {
+public class AuthorRepositoryMongoTest {
 
     @Autowired
     private AuthorRepository authorRepository;
+
+    @Autowired
+    private MongoOperations mongoOperations;
 
     @Test
     @DisplayName(" Должен находить всех авторов")
@@ -33,6 +35,7 @@ public class AuthorRepositoryJpaTest {
     void shouldSaveAuthor() {
         Author expectedAuthor = new Author("1", "Bulgakov");
         authorRepository.save(expectedAuthor);
-        assertThat(authorRepository.findById("1").get().getFullName()).isEqualTo("Bulgakov");
+        assertThat(mongoOperations.findById("1", Author.class).getFullName())
+                .isEqualTo("Bulgakov");
     }
 }

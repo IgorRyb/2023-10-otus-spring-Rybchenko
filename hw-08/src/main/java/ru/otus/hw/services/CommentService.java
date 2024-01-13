@@ -11,4 +11,6 @@ public interface CommentService {
     void deleteById(String id);
 
     void save(Comment comment);
+
+    Comment findByBookId(String id);
 }

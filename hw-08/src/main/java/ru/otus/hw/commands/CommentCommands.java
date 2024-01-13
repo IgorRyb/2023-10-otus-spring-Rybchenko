@@ -33,5 +33,4 @@ public class CommentCommands {
     public void updateComment(Comment comment) {
         commentService.save(comment);
     }
-
 }
