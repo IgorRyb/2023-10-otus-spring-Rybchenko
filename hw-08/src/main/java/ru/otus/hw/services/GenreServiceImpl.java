@@ -24,7 +24,6 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Optional<Genre> findById(String id) {
         return genreRepository.findById(id);
     }
@@ -32,6 +31,9 @@ public class GenreServiceImpl implements GenreService {
     @Override
     @Transactional
     public void deleteById(String id) {
+        if (bookRepository.findByGenreId(id) != null) {
+            throw new RuntimeException("Could not delete because there is a book with this genre");
+        }
         genreRepository.deleteById(id);
     }
 

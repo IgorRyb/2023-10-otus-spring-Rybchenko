@@ -29,4 +29,10 @@ public class GenreCommands {
                 .map(genreConverter::genreToString)
                 .orElse("Genre with id %s not found".formatted(id));
     }
+
+    @ShellMethod(value = "delete by id", key = "dgid")
+    public void deleteById(String id) {
+        genreService.deleteById(id);
+    }
+
 }

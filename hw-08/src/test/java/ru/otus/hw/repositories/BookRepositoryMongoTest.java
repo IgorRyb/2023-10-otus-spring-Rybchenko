@@ -21,27 +21,12 @@ public class BookRepositoryMongoTest {
     private BookRepository bookRepository;
 
     @Autowired
-    private AuthorRepository authorRepository;
-
-    @Autowired
-    private GenreRepository genreRepository;
-
-    @Autowired
-    private CommentRepository commentRepository;
-
-    @Autowired
     private MongoOperations mongoOperations;
-
-    private List<Author> authorsDb;
-
-    private List<Genre> genreDb;
 
     private List<Book> bookDb;
 
     @BeforeEach
     void initDb() {
-        authorsDb = getAuthorsDb();
-        genreDb = getGenresDb();
         bookDb = getBooksDb();
     }
 
@@ -59,7 +44,8 @@ public class BookRepositoryMongoTest {
     @DisplayName(" Должен сохранить новую книгу")
     @Test
     void shouldSaveBook() {
-        var expectedBook = new Book(null, "title", authorsDb.get(0), genreDb.get(0));
+        var expectedBook = new Book(null, "title",
+                new Author("0","New author"), new Genre("0", "New genre"));
         var savedBook = bookRepository.save(expectedBook);
         assertThat(savedBook).isNotNull()
                 .usingRecursiveComparison().isEqualTo(expectedBook);
@@ -72,14 +58,6 @@ public class BookRepositoryMongoTest {
         assertThat(expectedBook).isNotNull();
         bookRepository.deleteById(expectedBook.getId());
         assertThat(mongoOperations.findById(expectedBook.getId(), Book.class)).isNull();
-    }
-
-    private List<Author> getAuthorsDb() {
-        return authorRepository.findAll();
-    }
-
-    private List<Genre> getGenresDb() {
-        return genreRepository.findAll();
     }
 
     private List<Book> getBooksDb() {

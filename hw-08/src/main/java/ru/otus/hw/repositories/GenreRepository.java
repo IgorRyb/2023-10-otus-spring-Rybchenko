@@ -5,4 +5,6 @@ import ru.otus.hw.models.Genre;
 
 
 public interface GenreRepository extends MongoRepository<Genre, String> {
+
+
 }

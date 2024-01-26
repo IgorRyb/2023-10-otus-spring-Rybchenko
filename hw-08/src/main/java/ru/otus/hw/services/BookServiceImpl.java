@@ -25,7 +25,6 @@ public class BookServiceImpl implements BookService {
     private final CommentRepository commentRepository;
 
     @Override
-    @Transactional(readOnly = true)
     public Optional<Book> findById(String id) {
         return bookRepository.findById(id);
     }
@@ -50,8 +49,7 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public void deleteById(String id) {
-        var comment = commentRepository.findByBookId(id);
-        commentRepository.deleteById(comment.getId());
+        commentRepository.deleteAllByBookId(id);
         bookRepository.deleteById(id);
     }
 

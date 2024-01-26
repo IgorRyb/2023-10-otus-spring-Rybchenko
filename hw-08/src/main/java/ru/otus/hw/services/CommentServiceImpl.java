@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.otus.hw.models.Comment;
 import ru.otus.hw.repositories.CommentRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -15,7 +16,6 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
 
     @Override
-    @Transactional(readOnly = true)
     public Optional<Comment> findById(String id) {
         return commentRepository.findById(id);
     }
@@ -32,9 +32,8 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.save(comment);
     }
 
-    @Transactional
     @Override
-    public Comment findByBookId(String id) {
+    public List<Comment> findByBookId(String id) {
         return commentRepository.findByBookId(id);
     }
 }
