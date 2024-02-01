@@ -31,7 +31,7 @@ public class GenreServiceImpl implements GenreService {
     @Override
     @Transactional
     public void deleteById(String id) {
-        if (bookRepository.findByGenreId(id) != null) {
+        if (bookRepository.findByGenreId(id).size() != 0) {
             throw new RuntimeException("Could not delete because there is a book with this genre");
         }
         genreRepository.deleteById(id);
